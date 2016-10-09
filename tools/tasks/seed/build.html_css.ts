@@ -7,6 +7,7 @@ import * as util from 'gulp-util';
 import { join } from 'path';
 
 import Config from '../../config';
+import { CssTask } from '../css_task';
 
 const plugins = <any>gulpLoadPlugins();
 const cleanCss = require('gulp-clean-css');
@@ -147,4 +148,16 @@ function processExternalCss() {
 /**
  * Executes the build process, processing the HTML and CSS files.
  */
-export = () => merge(processComponentStylesheets(), prepareTemplates(), processExternalStylesheets());
+export =
+  class BuildHtmlCss extends CssTask {
+
+    precondition(files: String[]) {
+      return super.precondition(files) || files.reduce((a, f) => {
+	return a || f.endsWith('.html');
+      }, false);
+    }
+
+    run() {
+      return merge(processComponentStylesheets(), prepareTemplates(), processExternalStylesheets());
+    }
+  };
