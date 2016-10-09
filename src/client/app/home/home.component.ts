@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NameListService } from '../shared/index';
+import { JwtHelper } from 'angular2-jwt';
+
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -30,6 +32,8 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit() {
     this.getNames();
+    let jwtHelper:JwtHelper = new JwtHelper();
+    console.log(jwtHelper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIiLCJkZXNjIjoidGVzdCIsImlhdCI6MTQ3NjAwNDE1OH0.iJcKrlcTXhD4AcqBljaJSRDrR88iNaalLnGGMKz6LHs'));
   }
 
   /**
